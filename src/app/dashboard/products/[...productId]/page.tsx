@@ -1,0 +1,90 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { getProduct, deleteProduct } from "../../../../services/product";
+import { useRouter } from "next/navigation";
+
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  brand: string;
+  images: string[];
+}
+const SingleProductPage = () => {
+  const [product, setProduct] = useState<Product>({});
+  const { productId } = useParams();
+  const router = useRouter();
+  const id = productId[0];
+
+  useEffect(() => {
+    async function getProductById() {
+      try {
+        const product = await getProduct(id);
+        setProduct(product);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProductById();
+  }, [id]);
+
+  const deleteProductById = async () => {
+    try {
+      const deleted = await deleteProduct(id);
+      console.log(deleted);
+      router.push("/dashboard/products");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <div className="max-w-sm mx-auto ml-10 bg-white rounded-lg shadow-md overflow-hidden">
+      <img
+        src={product?.images?.length > 0 ? product.images[0] : ""}
+        alt={product.title}
+        className="h-48 w-full object-cover"
+      />
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          {product.title}
+        </h2>
+        <p className="text-gray-600 mt-2">{product.description}</p>
+
+        <div className="mt-4">
+          <span className="text-gray-700">Brand:</span>
+          <span className="ml-2 text-gray-900 font-bold">{product.brand}</span>
+        </div>
+        <div className="mt-2">
+          <span className="text-gray-700">Category:</span>
+          <span className="ml-2 text-gray-900 font-bold capitalize">
+            {product.category}
+          </span>
+        </div>
+        <div className="mt-2 flex items-center">
+          <span className="text-xl font-semibold text-gray-900">
+            ${product.price}
+          </span>
+        </div>
+        <div className="flex gap-4">
+          <button
+            className="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+            onClick={() => router.push(`/dashboard/products/edit/${product.id}`)}
+          >
+            Update
+          </button>
+          <button
+            className="mt-6 w-full bg-rose-600 text-white font-bold py-2 px-4 rounded hover:bg-rose-700 transition duration-300"
+            onClick={deleteProductById}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SingleProductPage;
