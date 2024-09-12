@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { editProduct } from "../../../../../services/product";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,7 @@ const EditProductById = () => {
   useEffect(() => {
     async function getProductByID() {
       try {
-        let product = await getProduct(id);
+        const product = await getProduct(id);
         reset({
           title: product.title || "",
           description: product.description || "",

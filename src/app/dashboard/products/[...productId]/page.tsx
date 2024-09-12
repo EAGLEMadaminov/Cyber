@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getProduct, deleteProduct } from "../../../../services/product";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -14,7 +15,7 @@ interface Product {
   images: string[];
 }
 const SingleProductPage = () => {
-  const [product, setProduct] = useState<Product>({});
+  const [product, setProduct] = useState<Partial<Product>>({});
   const { productId } = useParams();
   const router = useRouter();
   const id = productId[0];
@@ -42,9 +43,13 @@ const SingleProductPage = () => {
   };
   return (
     <div className="max-w-sm mx-auto ml-10 bg-white rounded-lg shadow-md overflow-hidden">
-      <img
-        src={product?.images?.length > 0 ? product.images[0] : ""}
-        alt={product.title}
+      <Image
+        src={
+          product?.images && product?.images?.length > 0
+            ? product.images[0]
+            : ""
+        }
+        alt={product?.title ? product.title : "product "}
         className="h-48 w-full object-cover"
       />
       <div className="p-6">
@@ -71,7 +76,9 @@ const SingleProductPage = () => {
         <div className="flex gap-4">
           <button
             className="mt-6 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-            onClick={() => router.push(`/dashboard/products/edit/${product.id}`)}
+            onClick={() =>
+              router.push(`/dashboard/products/edit/${product.id}`)
+            }
           >
             Update
           </button>

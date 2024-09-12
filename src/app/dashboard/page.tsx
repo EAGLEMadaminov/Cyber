@@ -13,14 +13,14 @@ export default function Home() {
 
   useEffect(() => {
     async function getAll() {
-      let products = await getProducts();
-      let todos = await getAllTodos();
-      let posts = await getAllPosts();
-      let users = await getAllUser();
-      setProductsCount(products.total);
-      setUsersCount(users.total);
-      setTodosCount(todos.total);
-      setPostsCount(posts.total);
+      const products = await getProducts();
+      const todos = await getAllTodos();
+      const posts = await getAllPosts();
+      const users = await getAllUser();
+      setProductsCount(products?.total);
+      setUsersCount(users?.total);
+      setTodosCount(todos?.total);
+      setPostsCount(posts?.total);
     }
     getAll();
   }, []);

@@ -1,37 +1,34 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { axiosIntancefrom } from "../../../utils/libs/axios";
+import { newAxiosInstance } from "../../../utils/libs/axios";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Inputs = {
-  email: string;
+  username: string;
   password: string;
 };
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [password, setPassword] = useState("");
   const [gmailError, setGmailError] = useState("");
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = async (data: Inputs) => {
     console.log(data);
     try {
-      const { data: register } = await axiosIntancefrom.post(
-        "/auth/sign-in",
+      const { data: register } = await newAxiosInstance.post(
+        "/auth/login",
         data
       );
       if (register) {
-        localStorage.setItem("access_token", register.access_token);
+        localStorage.setItem("access_token", register.token);
+        localStorage.setItem("refresh_token", register.refreshToken);
         router.push("/dashboard");
+        setGmailError("");
         console.log(register);
       }
     } catch (error) {
@@ -41,9 +38,9 @@ const SignInPage = () => {
   return (
     <>
       <div className="flex mx-auto justify-center sm:justify-between">
-        <img
+        <Image
           src="https://d38b044pevnwc9.cloudfront.net/cutout-nuxt/enhancer/2.jpg"
-          alt=""
+          alt="sign in page image "
           className="w-0 object-cover sm:w-[50%] h-[100vh]"
         />
         <div className="flex items-center w-[50%] mt-10 flex-col justify-center">
@@ -53,9 +50,9 @@ const SignInPage = () => {
             className=" w-[400px] mx-auto"
           >
             <div>
-              <label htmlFor="email">
+              <label htmlFor="username">
                 {" "}
-                Email <span className="text-rose-500">*</span>
+                Username <span className="text-rose-500">*</span>
               </label>
               <div className="flex items-center mb-2 my-1  px-3 border rounded-lg">
                 <span>
@@ -76,10 +73,11 @@ const SignInPage = () => {
                   </svg>
                 </span>
                 <input
-                  type="email"
-                  placeholder="Enter your email"
+                  type="text"
+                  id="username"
+                  placeholder="Enter your username"
                   className=" w-full placeholder:text-[#9BB8CF] border-none focus-visible:ring-offset-0 focus-visible:ring-0 p-2 px-3 rounded-lg outline-none"
-                  {...register("email")}
+                  {...register("username")}
                 />
               </div>
 
@@ -160,12 +158,12 @@ const SignInPage = () => {
             </div>
           </form>
 
-          <p className="text-center mt-10 text-[14px] text-main">
+          {/* <p className="text-center mt-10 text-[14px] text-main">
             Does have account yet?{" "}
             <a className="text-blue-600" rel="stylesheet" href="/auth/sign-up">
               Sign up
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </>

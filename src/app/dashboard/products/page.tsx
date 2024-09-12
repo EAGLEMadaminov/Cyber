@@ -4,6 +4,7 @@ import { getProducts, getCategories } from "../../../services/product";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 axios.defaults.baseURL = "https://dummyjson.com/products";
+import Image from "next/image";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ const ProductList = () => {
   useEffect(() => {
     async function getCateGoryList() {
       try {
-        let data = await getCategories();
+        const data = await getCategories();
         if (data) {
           setCateGories(data);
         }
@@ -55,7 +56,7 @@ const ProductList = () => {
   };
   const onCategoryChange = async (value) => {
     try {
-      let { data } = await axios.get(`/category/${value}`);
+      const { data } = await axios.get(`/category/${value}`);
       if (data) {
         console.log(data);
         setProducts(data.products);
@@ -113,7 +114,7 @@ const ProductList = () => {
             onClick={() => router.push(`/dashboard/products/${product.id}`)}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
-            <img
+            <Image
               className="w-full h-64 object-cover"
               src={product.thumbnail}
               alt={product.title}

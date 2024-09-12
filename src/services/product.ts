@@ -1,6 +1,23 @@
 import { newAxiosInstance } from "../utils/libs/axios";
 
-const getProduct = (id) => {
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  brand: string;
+  images: string[];
+  rating: number;
+}
+
+// Define the interface for the API response
+interface ProductsResponse {
+  total: number; // Total number of products
+  products: Product[]; // Array of products
+}
+
+const getProduct = (id): Promise<Product> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .get(`/products/${id}`)
@@ -14,7 +31,7 @@ const getProduct = (id) => {
   });
 };
 
-const getProducts = () => {
+const getProducts = (): Promise<ProductsResponse> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .get(`/products`)
@@ -26,7 +43,6 @@ const getProducts = () => {
       });
   });
 };
-
 const addProduct = (payload) => {
   return new Promise((resolve, reject) => {
     newAxiosInstance

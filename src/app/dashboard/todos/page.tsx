@@ -9,7 +9,7 @@ const Todos = () => {
   useEffect(() => {
     async function getTodos() {
       try {
-        let data = await getAllTodos();
+        const data = await getAllTodos();
         if (data) {
           setTodos(data.todos);
         }

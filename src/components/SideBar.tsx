@@ -8,6 +8,7 @@ import {
   FaClipboardList,
   FaTasks,
   FaBars,
+  FaUser,
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -94,6 +95,17 @@ const Sidebar = () => {
             <FaTasks size={20} />
             <span className={`${!isOpen && "hidden"} origin-left duration-200`}>
               Todos
+            </span>
+          </li>
+          <li
+            className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-blue-700 rounded-md ${
+              isOpen ? "justify-start" : "justify-center"
+            } ${pathname.includes("me") ? "bg-blue-700" : ""}`}
+            onClick={() => router.push("/dashboard/me")}
+          >
+            <FaUser size={20} />
+            <span className={`${!isOpen && "hidden"} origin-left duration-200`}>
+              Me
             </span>
           </li>
         </ul>

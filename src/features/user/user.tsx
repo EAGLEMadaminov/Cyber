@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type User = {
   firstName: string;
@@ -19,7 +20,7 @@ const UserCard = ({ user }: { user: User }) => {
     <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
       {/* User Image */}
       <div className="flex justify-center p-4 bg-blue-100">
-        <img
+        <Image
           src={user.image}
           alt={user.firstName}
           className="rounded-full h-24 w-24 object-cover"

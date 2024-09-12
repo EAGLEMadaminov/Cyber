@@ -23,7 +23,7 @@ const UserCardPage = () => {
   useEffect(() => {
     async function getAll() {
       try {
-        let data = await getAllUser();
+        const data = await getAllUser();
         if (data) {
           setUsers(data.users);
         }

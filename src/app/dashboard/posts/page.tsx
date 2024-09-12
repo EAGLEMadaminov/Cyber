@@ -3,13 +3,25 @@ import React, { useState, useEffect } from "react";
 import { getAllPosts } from "../../../services/posts";
 import PostCard from "../../../features/posts/PostCard";
 
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
+  views: number;
+  userId: number;
+}
+
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     async function getAll() {
       try {
-        let data = await getAllPosts();
+        const data = await getAllPosts();
         if (data) {
           setPosts(data.posts);
         }
