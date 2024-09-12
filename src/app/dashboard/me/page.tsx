@@ -26,7 +26,6 @@ interface User {
   };
 }
 
-
 const UserProfile = () => {
   const defaultUser: User = {
     firstName: "",
@@ -52,9 +51,9 @@ const UserProfile = () => {
   };
 
   const [user, setUser] = useState<User>(defaultUser);
-  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
     async function getUser() {
       try {
         const { data } = await newAxiosInstance.get("/auth/me", {
@@ -71,7 +70,7 @@ const UserProfile = () => {
       }
     }
     getUser();
-  }, [token]);
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <AdminProfile user={user} />

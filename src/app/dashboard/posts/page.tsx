@@ -2,18 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllPosts } from "../../../services/posts";
 import PostCard from "../../../features/posts/PostCard";
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  reactions: {
-    likes: number;
-    dislikes: number;
-  };
-  views: number;
-  userId: number;
-}
+import { Post } from "../../../types/post";
 
 const Posts = () => {
   const [posts, setPosts] = useState<Post[]>([]);

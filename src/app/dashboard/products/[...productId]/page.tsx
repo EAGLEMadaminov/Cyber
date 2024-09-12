@@ -4,23 +4,16 @@ import { useParams } from "next/navigation";
 import { getProduct, deleteProduct } from "../../../../services/product";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Product } from "../../../../types/product";
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  brand: string;
-  images: string[];
-}
 const SingleProductPage = () => {
   const [product, setProduct] = useState<Partial<Product>>({});
   const { productId } = useParams();
   const router = useRouter();
-  const id = productId[0];
+  const id = productId ? Number(productId) : NaN;
 
   useEffect(() => {
+    if (isNaN(id)) return;
     async function getProductById() {
       try {
         const product = await getProduct(id);

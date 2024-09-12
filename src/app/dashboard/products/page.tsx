@@ -5,10 +5,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 axios.defaults.baseURL = "https://dummyjson.com/products";
 import Image from "next/image";
+import { Product } from "../../../types/product";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCateGories] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCateGories] = useState<string[]>([]);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -42,7 +43,7 @@ const ProductList = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     try {
       const { data } = await axios.get(`/search?q=${e.target.value}`);
@@ -54,7 +55,7 @@ const ProductList = () => {
       console.log(error);
     }
   };
-  const onCategoryChange = async (value) => {
+  const onCategoryChange = async (value: string) => {
     try {
       const { data } = await axios.get(`/category/${value}`);
       if (data) {

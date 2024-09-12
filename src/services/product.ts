@@ -1,23 +1,7 @@
 import { newAxiosInstance } from "../utils/libs/axios";
+import { Product, ProductsResponse, ProductFormInputs } from "../types/product";
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  brand: string;
-  images: string[];
-  rating: number;
-}
-
-// Define the interface for the API response
-interface ProductsResponse {
-  total: number; // Total number of products
-  products: Product[]; // Array of products
-}
-
-const getProduct = (id): Promise<Product> => {
+const getProduct = (id: number): Promise<Product> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .get(`/products/${id}`)
@@ -43,7 +27,12 @@ const getProducts = (): Promise<ProductsResponse> => {
       });
   });
 };
-const addProduct = (payload) => {
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data?: Product; // Adjust this based on your API's response
+}
+const addProduct = (payload: ProductFormInputs): Promise<ApiResponse> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .post(`/products/add`, payload, {
@@ -62,7 +51,10 @@ const addProduct = (payload) => {
   });
 };
 
-const editProduct = (id, payload) => {
+const editProduct = (
+  id: number,
+  payload: ProductFormInputs
+): Promise<ApiResponse> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .put(`/products/${id}`, payload, {
@@ -80,7 +72,7 @@ const editProduct = (id, payload) => {
   });
 };
 
-const deleteProduct = (id) => {
+const deleteProduct = (id:number) => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .delete(`/products/${id}`)
@@ -93,7 +85,7 @@ const deleteProduct = (id) => {
       });
   });
 };
-const getCategories = () => {
+const getCategories = (): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     newAxiosInstance
       .get("/products/category-list")

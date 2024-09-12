@@ -1,17 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getProducts } from "../../services/product";
+import { Product } from "../../types/product";
+import Image from "next/image";
 
 // Call your getProducts function
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const productData = await getProducts();
-        setProducts(productData);
+        setProducts(productData.products);
       } catch (err) {
         setError("Failed to fetch products");
         console.error(err);
@@ -31,10 +33,10 @@ const ProductList = () => {
             key={product.id}
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
-            <img
+            <Image
               className="w-full h-64 object-cover"
               src={product.thumbnail}
-              alt={product.title}
+              alt={product?.title ? product.title : "product image"}
             />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{product.title}</h2>

@@ -2,20 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/user";
 import UserCard from "../../../features/user/user";
-
-type User = {
-  firstName: string;
-  lastName: string;
-  maidenName: string;
-  age: number;
-  gender: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  image: string;
-  university: string;
-  country: string;
-};
+import { User } from "../../../types/user";
 
 const UserCardPage = () => {
   const [users, setUsers] = useState<User[]>([]);

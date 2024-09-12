@@ -18,7 +18,7 @@ const EditProductById = () => {
   const { productId } = useParams();
   const router = useRouter();
 
-  const id = productId[0];
+  const id = productId ? Number(productId[0]) : 1;
   const {
     register,
     handleSubmit,
@@ -42,11 +42,11 @@ const EditProductById = () => {
       }
     }
     getProductByID();
-  }, [id]);
+  }, [id, reset]);
 
   const onSubmit: SubmitHandler<ProductFormInputs> = async (data) => {
     try {
-      const newProduct = await editProduct(productId, data);
+      const newProduct = await editProduct(id, data);
       if (newProduct) {
         console.log(newProduct);
         router.push("/dashboard/products");

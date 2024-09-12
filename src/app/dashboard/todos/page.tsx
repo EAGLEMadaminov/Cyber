@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { getAllTodos } from "../../../services/todos";
 import TodoCard from "../../../features/todos/TodoCard";
+import { Todo } from "../../../types/todos";
 
 const Todos = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
     async function getTodos() {
