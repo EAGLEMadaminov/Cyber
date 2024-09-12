@@ -3,6 +3,8 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { addProduct } from "../../../../services/product";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 type ProductFormInputs = {
   title: string;
@@ -24,10 +26,16 @@ const CreateProductForm = () => {
     try {
       const newProduct = await addProduct(data);
       if (newProduct) {
-        console.log(newProduct);
+        toast.success("Product has created successfully");
         router.push("/dashboard/products");
       }
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
       console.log(error);
     }
   };

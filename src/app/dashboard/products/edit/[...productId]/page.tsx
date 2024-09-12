@@ -5,6 +5,8 @@ import { editProduct } from "../../../../../services/product";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { getProduct } from "../../../../../services/product";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 type ProductFormInputs = {
   title: string;
@@ -48,11 +50,16 @@ const EditProductById = () => {
     try {
       const newProduct = await editProduct(id, data);
       if (newProduct) {
-        console.log(newProduct);
+        toast.success("Product has updated successfully");
         router.push("/dashboard/products");
       }
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 

@@ -21,6 +21,8 @@ const UserCard = ({ user }: { user: User }) => {
       {/* User Image */}
       <div className="flex justify-center p-4 bg-blue-100">
         <Image
+          width={100}
+          height={100}
           src={user.image}
           alt={user.firstName}
           className="rounded-full h-24 w-24 object-cover"

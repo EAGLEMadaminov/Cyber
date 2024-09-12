@@ -116,6 +116,8 @@ const ProductList = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <Image
+              width={100}
+              height={100}
               className="w-full h-64 object-cover"
               src={product.thumbnail}
               alt={product.title}

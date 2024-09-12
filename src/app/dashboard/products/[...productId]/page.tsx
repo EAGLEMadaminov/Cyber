@@ -5,6 +5,8 @@ import { getProduct, deleteProduct } from "../../../../services/product";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Product } from "../../../../types/product";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState<Partial<Product>>({});
@@ -27,16 +29,24 @@ const SingleProductPage = () => {
 
   const deleteProductById = async () => {
     try {
-      const deleted = await deleteProduct(id);
-      console.log(deleted);
+      await deleteProduct(id);
+      toast.success("Post has deleted succesfully");
       router.push("/dashboard/products");
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
       console.log(error);
     }
   };
   return (
     <div className="max-w-sm mx-auto ml-10 bg-white rounded-lg shadow-md overflow-hidden">
       <Image
+        width={100}
+        height={100}
         src={
           product?.images && product?.images?.length > 0
             ? product.images[0]

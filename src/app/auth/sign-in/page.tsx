@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { newAxiosInstance } from "../../../utils/libs/axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 type Inputs = {
   username: string;
@@ -25,6 +27,7 @@ const SignInPage = () => {
         data
       );
       if (register) {
+        toast.success("Your sign in successfully");
         localStorage.setItem("access_token", register.token);
         localStorage.setItem("refresh_token", register.refreshToken);
         router.push("/dashboard");
@@ -32,13 +35,20 @@ const SignInPage = () => {
         console.log(register);
       }
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
   return (
     <>
       <div className="flex mx-auto justify-center sm:justify-between">
         <Image
+          width={400}
+          height={600}
           src="https://d38b044pevnwc9.cloudfront.net/cutout-nuxt/enhancer/2.jpg"
           alt="sign in page image "
           className="w-0 object-cover sm:w-[50%] h-[100vh]"
