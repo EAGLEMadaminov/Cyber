@@ -33,6 +33,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-4 text-center">
         <Image
+          width={96}
+          height={96}
           className="w-24 h-24 rounded-full mx-auto border-4 border-white"
           src={user.image}
           alt={user.username}
