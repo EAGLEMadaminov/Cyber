@@ -51,10 +51,12 @@ const UserProfile = () => {
   };
 
   const [user, setUser] = useState<User>(defaultUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     async function getUser() {
+      setLoading(true);
       try {
         const { data } = await newAxiosInstance.get("/auth/me", {
           headers: {
@@ -67,12 +69,19 @@ const UserProfile = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     }
     getUser();
   }, []);
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <AdminProfile user={user} />
+    <div className="w-full">
+      {loading ? (
+        <p className="text-2xl text-center">Loading...</p>
+      ) : (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+          <AdminProfile user={user} />
+        </div>
+      )}
     </div>
   );
 };

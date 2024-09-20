@@ -6,9 +6,11 @@ import { User } from "../../../types/user";
 
 const UserCardPage = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getAll() {
+      setLoading(true);
       try {
         const data = await getAllUser();
         if (data) {
@@ -17,15 +19,22 @@ const UserCardPage = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     }
     getAll();
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-1 mt-10">
-      {users.map((user) => {
-        return <UserCard user={user} key={user.id} />;
-      })}
+    <div className="mt-10">
+      {loading ? (
+        <p className="text-[18px] text-center ">Loading...</p>
+      ) : (
+        <div className="flex flex-wrap gap-1 ">
+          {users.map((user) => {
+            return <UserCard user={user} key={user.id} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };
