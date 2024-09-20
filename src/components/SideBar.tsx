@@ -47,7 +47,7 @@ const Sidebar = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className="pt-6">
+        <nav className="pt-6">
           <li
             className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2  ${
               pathname.includes("products") ? "bg-blue-700" : ""
@@ -108,7 +108,7 @@ const Sidebar = () => {
               Me
             </span>
           </li>
-        </ul>
+        </nav>
       </div>
     </div>
   );

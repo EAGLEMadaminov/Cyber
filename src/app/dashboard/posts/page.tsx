@@ -18,7 +18,15 @@ const Posts = () => {
           setPosts(data.posts);
         }
       } catch (error) {
-        toast.error(error.data.message ? error.data.message : error.message);
+        const typedError = error as {
+          data?: { message?: string };
+          message?: string;
+        };
+        toast.error(
+          typedError.data?.message
+            ? typedError.data.message
+            : typedError.message
+        );
       }
       setLoading(false);
     }

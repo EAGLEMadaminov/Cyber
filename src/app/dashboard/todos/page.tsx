@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { getAllTodos } from "../../../services/todos";
 import { TodoCard } from "../../../features";
 import { Todo } from "../../../types/todos";
