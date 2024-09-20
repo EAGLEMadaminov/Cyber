@@ -17,41 +17,54 @@ type Post = {
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
-    <div className="max-w-lg mx-auto my-6 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
-      {/* Title */}
-      <div className="p-4 bg-blue-100">
+    <article className="max-w-lg mx-auto my-6 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
+      {/* Header for the post title */}
+      <header className="p-4 bg-blue-100">
         <h2 className="text-xl font-bold text-gray-900">{post.title}</h2>
-      </div>
+      </header>
 
-      {/* Post Body */}
-      <div className="p-6">
+      {/* Main section for the post body and stats */}
+      <section className="p-6">
+        {/* Displaying the body of the post */}
         <p className="text-gray-700 mb-4">{post.body}</p>
 
-        {/* Post Stats */}
+        {/* Post statistics: Views, Likes, Dislikes */}
         <div className="flex justify-between items-center mt-4 text-gray-600">
-          <div>
-            <span className="font-semibold">Views:</span> {post.views}
-          </div>
-          <div className="flex space-x-4 gap-2">
-            <div className="flex items-center space-x-1 gap-1">
+          {/* Views count */}
+          <p>
+            <strong>Views:</strong> {post.views}
+          </p>
+
+          {/* Likes and dislikes with icons */}
+          <aside className="flex space-x-4">
+            {/* Likes */}
+            <figure className="flex items-center">
               <Image src={Like} width={24} height={24} alt="Like icon" />
-              <span>{post.reactions.likes}</span>
-            </div>
-            <div className="flex items-center space-x-2 gap-1">
-              <Image src={DisLikeIcon} width={24} height={24} alt="" />
-              <span>{post.reactions.dislikes}</span>
-            </div>
-          </div>
+              <figcaption className="ml-1">{post.reactions.likes}</figcaption>
+            </figure>
+            {/* Dislikes */}
+            <figure className="flex items-center">
+              <Image
+                src={DisLikeIcon}
+                width={24}
+                height={24}
+                alt="Dislike icon"
+              />
+              <figcaption className="ml-1">
+                {post.reactions.dislikes}
+              </figcaption>
+            </figure>
+          </aside>
         </div>
 
-        {/* Post Footer */}
-        <div className="mt-6">
+        {/* Post footer displaying the user ID */}
+        <footer className="mt-6">
           <p className="text-sm text-gray-500">
-            <span className="font-semibold">Posted by User:</span> {post.userId}
+            <strong>Posted by User:</strong> {post.userId}
           </p>
-        </div>
-      </div>
-    </div>
+        </footer>
+      </section>
+    </article>
   );
 };
 

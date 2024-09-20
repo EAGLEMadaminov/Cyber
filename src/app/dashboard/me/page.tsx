@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { newAxiosInstance } from "../../../utils/libs/axios";
-import AdminProfile from "../../../features/user/AdminUser";
+import { AdminUser } from "../../../features";
 
 interface User {
   firstName: string;
@@ -79,7 +79,7 @@ const UserProfile = () => {
         <p className="text-2xl text-center">Loading...</p>
       ) : (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-          <AdminProfile user={user} />
+          <AdminUser user={user} />
         </div>
       )}
     </div>

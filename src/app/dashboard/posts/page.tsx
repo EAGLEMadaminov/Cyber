@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { getAllPosts } from "../../../services/posts";
-import PostCard from "../../../features/posts/PostCard";
+import { PostCard } from "../../../features";
 import { Post } from "../../../types/post";
 import { toast } from "react-toastify";
 
